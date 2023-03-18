@@ -1,0 +1,54 @@
+
+
+[
+  {
+    "question": "What is the capital city of Peru?",
+    "answers": [
+      "Buenos Aires",
+      "Lima",
+      "Santiago",
+      "Bogota"
+    ],
+    "right_answer": "Lima"
+  },
+  {
+    "question": "Who is the author of the Harry Potter series?",
+    "answers": [
+        "J.K. Rowling",
+        "Stephenie Meyer",
+        "Suzanne Collins",
+        "George R.R. Martin"
+    ],
+    "right_answer": "J.K. Rowling"
+  },
+  {
+    "question": "What is the largest planet in our solar system?",
+    "answers": [
+        "Jupiter",
+        "Saturn",
+        "Uranus",
+        "Neptune"
+    ],
+    "right_answer": "Jupiter"
+  },
+  {
+    "question": "What is the capital city of Germany?",
+    "answers": [
+        "Paris",
+        "Berlin",
+        "Madrid",
+        "Rome"
+    ],
+    "right_answer": "Berlin"
+  },
+  {
+    "question": "Who painted the Mona Lisa?",
+    "answers": [
+        "Vincent van Gogh",
+        "Leonardo da Vinci",
+        "Pablo Picasso",
+        "Michelangelo"
+    ],
+    "right_answer": "Leonardo da Vinci"
+  }
+]
