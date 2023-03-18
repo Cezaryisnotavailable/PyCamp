@@ -3,16 +3,19 @@ from _datetime import datetime
 
 
 def load_json():
+    """Loading json file"""
     with open("questions.json") as file:
         data_to_be_loaded = json.load(file)
     return data_to_be_loaded
 
 
 def format_answer(given_answer):
+    """Formatting given string"""
     return given_answer.lower().strip().replace(" ", "")
 
 
 def quiz(given_data):
+    """Printing questions, checking answers and saving score to .txt file"""
     print(f"Welcome!\n Please answer for each of {len(given_data)} questions\n")
     correct_answer_counter = 0
     for question in given_data:
