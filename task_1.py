@@ -1,10 +1,10 @@
 import json
-from _datetime import datetime
+from datetime import datetime
 
 
 def load_json():
     """Loading json file"""
-    with open("questions.json") as file:
+    with open("questions.json", encoding="UTF-8") as file:
         data_to_be_loaded = json.load(file)
     return data_to_be_loaded
 
