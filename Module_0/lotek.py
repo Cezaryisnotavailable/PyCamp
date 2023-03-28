@@ -19,17 +19,50 @@ def check_your_luck(my_numbers, draw_six_numbers):
         """
     my_numbers_set = set(my_numbers)
     counter = 0
+    common_numbers_dict = {
+        "three common numbers": [],
+        "four common numbers": [],
+        "five common numbers": [],
+    }
 
     while True:
         draw_six_numbers_set = set(draw_six_numbers())
         counter += 1
         if my_numbers_set == draw_six_numbers_set:
-            return my_numbers_set, draw_six_numbers_set, counter
+            return my_numbers_set, draw_six_numbers_set, counter, common_numbers_dict
+        else:
+            common_numbers = my_numbers_set.intersection(draw_six_numbers_set)
+            if len(common_numbers) == 3:
+                common_numbers_dict["three common numbers"].append(
+                    {"common_numbers": common_numbers,
+                     "common_numbers_counter": len(common_numbers),
+                     "draw_counter": counter
+                     }
+                )
+            elif len(common_numbers) == 4:
+                common_numbers_dict["four common numbers"].append(
+                    {"common_numbers": common_numbers,
+                     "common_numbers_counter": len(common_numbers),
+                     "draw_counter": counter
+                     }
+                )
+            elif len(common_numbers) == 5:
+                common_numbers_dict["five common numbers"].append(
+                    {"common_numbers": common_numbers,
+                     "common_numbers_counter": len(common_numbers),
+                     "draw_counter": counter
+                     }
+                )
 
 
 if __name__ == "__main__":
     draw = check_your_luck(MY_NUMBERS, random_six_numbers)
     print(f"Your numbers: {sorted(list(draw[0]))}")
-    print(f"Drawn numbers: {sorted(list(draw[1]))}")
+    print(f"Drawn numbers: {(list(draw[1]))}")
     number_of_attempts = format(draw[2], ",").replace(",", "_")
     print(f"It took {number_of_attempts} attempts to match your numbers!")
+    output_list = []
+    for key in draw[3].keys():
+        output_list.append(f"You hit {key} {len(draw[3][key])} times")
+    output_list.reverse()
+    print("\n".join(output_list))
