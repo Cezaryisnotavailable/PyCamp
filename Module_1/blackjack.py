@@ -2,7 +2,6 @@ import random
 from faker import Faker
 
 
-# po inicjalizacji deck trzeba bedzie aktualziwoac deck po rozdaniu kart
 class Game:
     def __init__(self, croupier, players, deck):
         self.croupier = croupier
@@ -14,10 +13,25 @@ class Game:
         Shuffles the deck and deals two cards to each player in the game.
         """
         self.deck.shuffle()
+        for player in self.players:
+            while True:
+                try:
+                    bet = int(input(f"{player.name}, place your bet "))
+                    if bet <= 0:
+                        raise ValueError("Bet must be greater than zero")
+                    if bet > 100:
+                        raise ValueError("Maximum bet is 100")
+                    if bet > player.balance:
+                        raise ValueError("Not enough funds")
+                    player.bet = bet
+                    break
+                except ValueError as e:
+                    print(e)
+
         for _ in range(2):
             for player in self.players:
-                    card = self.deck.deal_card()
-                    player.cards.append(card)
+                card = self.deck.deal_card()
+                player.cards.append(card)
             card = self.deck.deal_card()
             self.croupier.cards.append(card)
 
@@ -25,8 +39,9 @@ class Game:
         for index, player in enumerate(self.players):
             print(f"Player {index + 1} {player.name}")
             player.total_value_counter()
+            if player.total_value_counter() == 21:
+                player.balance += player.bet * 1.5
             print("*" * 20)
-
         print(f"Croupier {self.croupier.name}")
         print(self.croupier.cards[0][0:2]) # only the first card is visible for the players until check
 
@@ -49,29 +64,12 @@ class Human:
         if not self.cards:
             raise NoCardsException("Player has no cards in hand")
         for i, (suit, rank_name, value) in enumerate(self.cards):
-            # if 10 < rank < 14:
-            #     rank = 10
-            # elif rank == 14:
-            #     while True:
-            #         try:
-            #             chosen_value = int(input(f"You got ace ({suit}-{rank}). Please choose your value 1 or 11"))
-            #             if chosen_value not in (1, 11):
-            #                 raise ValueError("Invalid value, please enter 1 or 11")
-            #             break
-            #         except ValueError as e:
-            #             print(e)
-            #     rank = chosen_value
             if self.cards[0][1] == "Ace" and rank_name == "Ace":
                 value = 1
-
             total_value += value
             print(f"Card no. {i + 1} is {suit}-{rank_name}")
         print(f"Total value is {total_value}")
         return total_value
-
-
-
-
 
 
 class Player(Human):
@@ -79,6 +77,8 @@ class Player(Human):
         super().__init__()
         fake = Faker()
         self.name = fake.name()
+        self.balance = 100
+        self.bet = 0
 
     @classmethod
     def create_random_players(cls, min_players=2, max_players=7):
