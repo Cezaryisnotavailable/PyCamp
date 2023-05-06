@@ -84,11 +84,10 @@ class Player(Human):
     def create_random_players(cls, min_players=2, max_players=7):
         num_players = random.randint(min_players, max_players)
         players = []
-        for i in range(num_players):
+        for i in range(num_players + 1):
             player = cls()
             players.append(player)
         return players
-
 
 
 class Croupier(Human):
@@ -110,6 +109,9 @@ class Deck:
         self.cards = []
         self.build()
 
+    def __len__(self):
+        return len(self.cards)
+
     def build(self):
         """create all possible card combinations"""
         for suit in self.SUITS:
@@ -119,7 +121,6 @@ class Deck:
                     value = 11
 
                 self.cards.append((suit, rank_name, value))
-
 
     def shuffle(self):
         """ shuffle the deck"""
@@ -131,11 +132,11 @@ class Deck:
 
 
 
-deck = Deck()
-random_players = Player.create_random_players(min_players=2, max_players=7)
-game = Game(croupier=Croupier(), players=random_players, deck=deck)
-game.start_game()
-game.show_current_status()
+# deck = Deck()
+# random_players = Player.create_random_players(min_players=2, max_players=7)
+# game = Game(croupier=Croupier(), players=random_players, deck=deck)
+# game.start_game()
+# game.show_current_status()
 
 
 
