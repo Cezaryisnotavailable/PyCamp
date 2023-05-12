@@ -43,8 +43,7 @@ class Game:
                 player.balance += player.bet * 1.5
             print("*" * 20)
         print(f"Croupier {self.croupier.name}")
-        print(self.croupier.cards[0][0:2]) # only the first card is visible for the players until check
-
+        print(self.croupier.cards[0][0:2])  # only the first card is visible for the players until check
 
 
 class NoCardsException(Exception):
@@ -84,7 +83,7 @@ class Player(Human):
     def create_random_players(cls, min_players=2, max_players=7):
         num_players = random.randint(min_players, max_players)
         players = []
-        for i in range(num_players + 1):
+        for i in range(num_players):
             player = cls()
             players.append(player)
         return players

@@ -1,8 +1,10 @@
 import random
 
 import pytest
+from pytest_mock import mocker
 
-from blackjack import Deck, Human, NoCardsException, Croupier, Player
+
+from blackjack import Deck, Human, NoCardsException, Croupier, Player, Game
 
 
 @pytest.fixture()
@@ -21,7 +23,6 @@ def test_deck_colours_values(deck):
     assert ('Diamonds', '3', 3) in deck.cards
     assert ('Diamonds', 'Ace', 11) in deck.cards
     assert ('Diamonds', '4', 3) not in deck.cards
-
 
 
 def test_pop_deck(deck):
@@ -62,6 +63,41 @@ def test_player():
     assert player.bet == 0
     assert len(player.create_random_players()) in range(2, 8)
     assert len(player.create_random_players(3, 10)) in range(3, 11)
+
+
+def test_game(mocker, deck):
+    croupier = Croupier()
+    player1 = Player()
+    player2 = Player()
+    player3 = Player()
+    mocker.patch("builtins.input", side_effect=[50, 75, 100])
+    game = Game(croupier=croupier, players=[player1, player2, player3], deck=deck)
+    game.start_game()
+
+    assert player1.bet == 50
+    assert player2.bet == 75
+    assert player3.bet == 100
+
+
+def test_game_show_current_status(deck):
+
+
+
+def test_no_cards_exception():
+    croupier = Croupier()
+    player1 = Player()
+    with pytest.raises(NoCardsException) as exc_info:
+        croupier.total_value_counter()
+    assert str(exc_info.value.args[0]) == "Player has no cards in hand"
+
+    with pytest.raises(NoCardsException) as exc_info:
+        player1.total_value_counter()
+    assert str(exc_info.value.args[0]) == "Player has no cards in hand"
+
+
+
+
+
 
 
 
