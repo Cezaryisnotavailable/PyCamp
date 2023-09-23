@@ -38,9 +38,10 @@ class Game:
     def show_current_status(self):
         for index, player in enumerate(self.players):
             print(f"Player {index + 1} {player.name}")
-            player.total_value_counter()
-            if player.total_value_counter() == 21:
+            total_value = player.total_value_counter()
+            if total_value == 21:
                 player.balance += player.bet * 1.5
+                self.players.remove(player)
             print("*" * 20)
         print(f"Croupier {self.croupier.name}")
         print(self.croupier.cards[0][0:2])  # only the first card is visible for the players until check
@@ -131,11 +132,11 @@ class Deck:
 
 
 
-# deck = Deck()
-# random_players = Player.create_random_players(min_players=2, max_players=7)
-# game = Game(croupier=Croupier(), players=random_players, deck=deck)
-# game.start_game()
-# game.show_current_status()
+deck = Deck()
+random_players = Player.create_random_players(min_players=2, max_players=7)
+game = Game(croupier=Croupier(), players=random_players, deck=deck)
+game.start_game()
+game.show_current_status()
 
 
 

@@ -79,8 +79,40 @@ def test_game(mocker, deck):
     assert player3.bet == 100
 
 
-def test_game_show_current_status(deck):
+def test_game_show_current_status(deck, capsys):
+    # Create a test game with a croupier and players
+    croupier = Croupier()
+    player1 = Player()
+    player2 = Player()
+    game = Game(croupier=croupier, players=[player1, player2], deck=deck)
 
+    # Set up player cards and bets for testing
+    player1.cards = [('Hearts', 'Ace', 11), ('Spades', 'King', 10)]
+    player1.bet = 50
+    player1.balance = 100
+
+    player2.cards = [('Diamonds', '8', 8), ('Clubs', '7', 7)]
+    player2.bet = 75
+    player2.balance = 100
+
+    croupier.cards = [('Diamonds', '6', 6), ('Clubs', '6', 6)]
+
+    # Call the method to be tested
+    game.show_current_status()
+
+    # Assert that the total value is correctly calculated and displayed
+    expected_output = "Player 1 " + player1.name + "\n"
+    expected_output += "Card no. 1 is Hearts-Ace\n"
+    expected_output += "Card no. 2 is Spades-King\n"
+    expected_output += "Total value is 21\n"
+    expected_output += "********************\n"
+    expected_output += "Player 2 " + player2.name + "\n"
+    expected_output += "Card no. 1 is Diamonds-8\n"
+    expected_output += "Card no. 2 is Clubs-7\n"
+    expected_output += "Total value is 15\n"
+    expected_output += "********************\n"
+
+    assert capsys.readouterr().out == expected_output
 
 
 def test_no_cards_exception():
