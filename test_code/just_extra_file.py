@@ -1,4 +1,5 @@
 import timeit
+import logging
 
 
 def find_two_multipliers_for_product(product):
@@ -42,7 +43,8 @@ def find_three_multipliers_for_product_gpt4(product):
 
 
 two_multipliers = find_two_multipliers_for_product(36)
-print(two_multipliers)
+logging.warning(two_multipliers)
+# print(two_multipliers)
 
 start_time = timeit.default_timer()
 three_multipliers = find_three_multipliers_for_product(36)
@@ -57,5 +59,9 @@ end_time = timeit.default_timer()
 execution_time = end_time - start_time
 print(f"Execution time: {execution_time:.10f} seconds")
 print(result)
+
+
+
+
 
 
