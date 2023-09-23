@@ -1,0 +1,8 @@
+2023-06-07 17:55:18,443 - my_logger - DEBUG - Debug message
+2023-06-07 17:55:18,443 - my_logger - INFO - Info message
+2023-06-07 17:55:18,443 - my_logger - WARNING - Warning message
+2023-06-07 17:55:18,443 - my_logger - ERROR - Error message
+2023-06-07 17:55:18,443 - my_logger - CRITICAL - Critical message
+2023-06-07 17:55:44,481 - my_logger - CRITICAL - Critical message
+2023-06-07 17:55:59,763 - my_logger - ERROR - Error message
+2023-06-07 17:55:59,763 - my_logger - CRITICAL - Critical message
