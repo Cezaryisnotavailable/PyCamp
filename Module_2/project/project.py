@@ -52,17 +52,17 @@ def check_passwords():
         logger.info("Passwords checked successfully")
 
 
-def check_password(password):
+def check_password_if_leaked(password):
     hexed_password = hex_password(password)
     leaked_passwords = download_prefix_hashes(prefix_hexed_password(hexed_password))
     if hexed_password in leaked_passwords:
         logger.warning(f"Leaked password. Change your password!")
-        return False
+        return True
     else:
         logger.info(f"Your password has not been leaked")
-        return True
+        return False
 
 
 if __name__ == "__main__":
     # check_passwords()
-    check_password(input("Check your password "))
+    check_password_if_leaked(input("Check your password "))

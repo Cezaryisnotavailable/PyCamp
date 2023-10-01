@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from project import check_password
+from project import check_password_if_leaked, logger
 
 
 class Validator(ABC):
@@ -70,7 +70,7 @@ class HaveIbeenPwnedValidator(Validator):
         self.text = text
 
     def is_valid(self):
-        return check_password(self.text)
+        return check_password_if_leaked(self.text)
 
 
 class PasswordValidator(Validator):
@@ -87,9 +87,14 @@ class PasswordValidator(Validator):
 
     def is_valid(self):
         for class_name in self.validators:
-            validator = class_name(self.text)
-            validator.is_valid()
+            class_validator = class_name(self.password)
+            result = class_validator.is_valid()
+            logger.info(f"class_name {class_name.__name__} result {result}")
 
 
-# validator = PasswordValidator("asdas3")
-# print(validator.is_valid())
+if __name__ == "__main__":
+    validator = PasswordValidator("asdas3")
+    validator.is_valid()
+    logger.info("---" * 2 + "New password checking".upper() + "---" * 2)
+    validator = PasswordValidator("asdasdSS@#$#@8274023!(())&^%$#asdasdXCFDYH")
+    validator.is_valid()
