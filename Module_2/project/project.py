@@ -29,21 +29,17 @@ def download_prefix_hashes(prefix):
         return cleaned_hashes
 
     else:
-        print(f"Error with API: status code: {response.status_code}")
+        logger.error(f"Error with API: status code: {response.status_code}")
 
 
 def check_passwords():
-
     try:
         with open("passwords.txt", mode="r", encoding="UTF-8") as passwords, \
                 open("safe_passwords", mode="w") as safe_passwords:
             for line in passwords:
                 password = line.strip()
                 hexed_password = hex_password(password)
-                print(hexed_password)
-                print(prefix_hexed_password(hexed_password))
                 leaked_passwords = download_prefix_hashes(prefix_hexed_password(hexed_password))
-                print(leaked_passwords)
 
                 if hexed_password in leaked_passwords:
                     logger.warning(f"Leaked password {password}")
@@ -56,6 +52,17 @@ def check_passwords():
         logger.info("Passwords checked successfully")
 
 
-if __name__ == "__main__":
-    check_passwords()
+def check_password(password):
+    hexed_password = hex_password(password)
+    leaked_passwords = download_prefix_hashes(prefix_hexed_password(hexed_password))
+    if hexed_password in leaked_passwords:
+        logger.warning(f"Leaked password. Change your password!")
+        return False
+    else:
+        logger.info(f"Your password has not been leaked")
+        return True
 
+
+if __name__ == "__main__":
+    # check_passwords()
+    check_password(input("Check your password "))
