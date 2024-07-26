@@ -131,14 +131,8 @@ class Deck:
         return self.cards.pop()
 
 
-
-deck = Deck()
+game_deck = Deck()
 random_players = Player.create_random_players(min_players=2, max_players=7)
-game = Game(croupier=Croupier(), players=random_players, deck=deck)
+game = Game(croupier=Croupier(), players=random_players, deck=game_deck)
 game.start_game()
 game.show_current_status()
-
-
-
-
-
